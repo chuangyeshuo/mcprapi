@@ -1,4 +1,12 @@
 #!/bin/sh
+###
+ # @Author: lidi10@staff.weibo.com
+ # @Date: 2025-07-26 20:02:30
+ # @LastEditTime: 2025-07-26 22:11:02
+ # @LastEditors: lidi10@staff.weibo.com
+ # @Description: 
+ # Copyright (c) 2023 by Weibo, All Rights Reserved. 
+### 
 
 # 数据库初始化脚本
 # 检查数据库是否已经初始化，如果没有则进行初始化

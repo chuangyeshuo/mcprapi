@@ -44,26 +44,47 @@ make docker-ps
 
 # 查看日志
 make docker-logs
+
+# 查看初始化日志
+docker-compose logs db-init
 ```
+
+**注意：** 
+- 首次启动时会自动运行数据库初始化容器 `db-init`
+- 初始化容器会创建默认管理员账户：`admin/123456`
+- 初始化完成后，该容器会自动停止，不会重启
+- 后端服务会等待初始化完成后再启动
 
 访问地址：
 - 前端应用: http://localhost:8082
 - 后端API: http://localhost:8081
 - API文档: http://localhost:8081/swagger/index.html
+- 健康检查: http://localhost:8081/health
 
 ### 4. 开发环境部署
 
 ```bash
-# 启动开发环境（支持热重载）
-make docker-dev-up
+# 启动开发环境（自动初始化数据库）
+docker-compose -f docker-compose.dev.yml up -d
 
-# 查看开发环境日志
-make docker-dev-logs
+# 查看服务状态
+docker-compose -f docker-compose.dev.yml ps
+
+# 查看初始化日志
+docker-compose -f docker-compose.dev.yml logs db-init-dev
 ```
 
+**注意：** 
+- 首次启动时会自动运行数据库初始化容器 `db-init-dev`
+- 初始化容器会创建默认管理员账户：`admin/123456`
+- 初始化完成后，该容器会自动停止，不会重启
+- 后端服务会等待初始化完成后再启动
+- 开发环境支持热重载功能
+
 开发环境额外服务：
-- 数据库管理: http://localhost:8080 (Adminer)
-- Redis管理: http://localhost:8081 (Redis Commander)
+- 健康检查: http://localhost:8081/health
+- 数据库管理: http://localhost:8083 (Adminer)
+- Redis管理: http://localhost:8084 (Redis Commander)
 
 ## 环境变量配置
 

@@ -128,22 +128,53 @@ Get up and running in under 2 minutes:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/mcp-rapi.git
-cd mcp-rapi
+git clone https://github.com/chuangyeshuo/mcprapi.git
+cd mcprapi
 
-# 2. Copy and configure environment
+# 2. Start development environment (with hot reload & admin tools)
+docker-compose -f docker-compose.dev.yml up -d
+
+# 3. Check service status
+docker-compose -f docker-compose.dev.yml ps
+
+# 🎉 Your MCP RAPI system is now running!
+```
+
+**🌐 Access URLs:**
+- **Frontend Dashboard**: http://localhost:8082
+- **Backend API**: http://localhost:8081
+- **API Documentation**: http://localhost:8081/swagger/index.html
+- **Health Check**: http://localhost:8081/health
+- **Database Admin**: http://localhost:8083 (Adminer)
+- **Redis Admin**: http://localhost:8084 (Redis Commander)
+
+**🔑 Default Login:**
+```
+Username: admin
+Password: admin
+```
+
+> ⚠️ **Security Note**: Please change the default password immediately after first login!
+
+### 🏭 Production Deployment
+
+```bash
+# 1. Configure environment variables
 cp .env.example .env
-# Edit .env file with your preferred settings (optional)
+# Edit .env file with your production settings
 
-# 3. Start all services with Docker Compose
+# 2. Start production environment
 docker-compose up -d
 
-# 🎉 That's it! Your MCP RAPI system is now running:
-# 🌐 Frontend Dashboard: http://localhost:8082
-# 🔧 Backend API: http://localhost:8081
-# 📚 API Documentation: http://localhost:8081/swagger/index.html
-# 🤖 MCP Server: http://localhost:8080 (if enabled)
+# 3. Check service status
+docker-compose ps
 ```
+
+**Production URLs:**
+- **Frontend**: http://localhost:8082
+- **Backend API**: http://localhost:8081
+- **API Documentation**: http://localhost:8081/swagger/index.html
+- **Health Check**: http://localhost:8081/health
 
 ### 💻 Local Development Setup
 
@@ -229,6 +260,7 @@ Interactive API documentation is available once the system is running:
 
 ### 📚 Additional Resources
 
+- [🚀 Quick Start Guide](QUICK_START.md) - **Start here for fastest setup!**
 - [🏗️ System Architecture](API多租户授权管理系统架构文档.md)
 - [🗃️ Database Setup Guide](DATABASE_INIT.md)
 - [🐳 Docker Deployment Guide](DOCKER_DEPLOYMENT.md)

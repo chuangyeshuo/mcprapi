@@ -64,6 +64,7 @@ func main() {
 	businessHandler := handler.NewBusinessHandler(c.BusinessService, c.AuthService)
 	casbinHandler := handler.NewCasbinHandler(c.CasbinService, c.AuthService)
 	dashboardHandler := handler.NewDashboardHandler(c.DashboardService, c.AuthService)
+	initHandler := handler.NewInitHandler(c.InitService)
 
 	// 初始化部门级别处理器
 	deptPermissionHandler := handler.NewDeptPermissionHandler(c.DeptPermissionService)
@@ -84,6 +85,16 @@ func main() {
 	// Swagger文档路由
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
+	// 健康检查路由（用于Docker容器健康检查）
+	r.GET("/health", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"status":    "ok",
+			"timestamp": time.Now().Unix(),
+			"service":   "mcprapi-backend",
+			"version":   "1.0.0",
+		})
+	})
+
 	// 注册路由
 	// 公共API
 	publicAPI := r.Group("/api/v1")
@@ -95,6 +106,9 @@ func main() {
 		// 扫码登录
 		publicAPI.POST("/auth/qrcode", userHandler.GenerateQRCode)
 		publicAPI.GET("/auth/qrcode/:id", userHandler.CheckQRCode)
+		
+		// 数据库初始化相关路由（无需认证）
+		initHandler.Register(publicAPI)
 	}
 
 	// 基础认证API（只需要JWT认证，不需要权限控制）

@@ -97,6 +97,12 @@ services:
       - ./backend:/app
       - ./backend/logs:/app/logs
     working_dir: /app
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
 
   # 前端Web服务（开发环境 - 热重载）
   frontend-dev:
@@ -113,7 +119,8 @@ services:
     ports:
       - "${FRONTEND_PORT:-8082}:8082"
     depends_on:
-      - backend-dev
+      backend-dev:
+        condition: service_healthy
     networks:
       - mcprapi-dev-network
     volumes:

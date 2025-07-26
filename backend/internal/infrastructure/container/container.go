@@ -47,6 +47,7 @@ type Container struct {
 	CasbinService         *service.CasbinService
 	DeptPermissionService *service.DeptPermissionService
 	DashboardService      *service.DashboardService
+	InitService           *service.InitService
 }
 
 // New 创建依赖注入容器
@@ -128,10 +129,10 @@ func (c *Container) initDB() error {
 		return err
 	}
 
-	// 初始化数据
-	if err := database.InitData(db); err != nil {
-		return err
-	}
+	// 注释掉自动初始化数据，改为延迟初始化
+	// if err := database.InitData(db); err != nil {
+	// 	return err
+	// }
 
 	c.DB = db
 	return nil
@@ -193,6 +194,7 @@ func (c *Container) initService() {
 	c.CasbinService = service.NewCasbinService(c.Enforcer, c.DB)
 	c.DeptPermissionService = service.NewDeptPermissionService(c.UserRepository, c.RoleRepository, c.DepartmentRepository, c.Enforcer)
 	c.DashboardService = service.NewDashboardService(c.APIService, c.BusinessService, c.DepartmentService, c.UserService, c.APIRepository)
+	c.InitService = service.NewInitService(c.DB, c.Enforcer)
 }
 
 // Close 关闭容器

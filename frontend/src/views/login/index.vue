@@ -1,5 +1,15 @@
 <template>
   <div class="login-container">
+    <!-- 数据库初始化提示 -->
+    <div v-if="showInitMessage" class="init-message">
+      <el-alert
+        :title="initMessage"
+        :type="initMessageType"
+        :closable="false"
+        show-icon>
+      </el-alert>
+    </div>
+
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
@@ -54,6 +64,7 @@
 
 <script>
 import { validUsername } from '@/utils/validate';
+import { checkInitStatus, initDatabase } from '@/api/init';
 
 export default {
   name: 'UserLogin',
@@ -83,7 +94,10 @@ export default {
       },
       loading: false,
       passwordType: 'password',
-      redirect: undefined
+      redirect: undefined,
+      showInitMessage: false,
+      initMessage: '',
+      initMessageType: 'info'
     }
   },
   watch: {
@@ -94,7 +108,55 @@ export default {
       immediate: true
     }
   },
+  async mounted() {
+    // 检查数据库初始化状态
+    await this.checkDatabaseInit()
+  },
   methods: {
+    async checkDatabaseInit() {
+      try {
+        this.showInitMessage = true
+        this.initMessage = '正在检查数据库初始化状态...'
+        this.initMessageType = 'info'
+
+        const response = await checkInitStatus()
+        
+        if (response.data && !response.data.initialized) {
+          // 数据库未初始化，自动进行初始化
+          this.initMessage = '数据库未初始化，正在自动初始化...'
+          this.initMessageType = 'warning'
+          
+          const initResponse = await initDatabase()
+          
+          if (initResponse.data) {
+            this.initMessage = `数据库初始化成功！管理员账号: ${initResponse.data.admin_username}，密码: ${initResponse.data.admin_password}`
+            this.initMessageType = 'success'
+            
+            // 更新登录表单的默认值
+            this.loginForm.username = initResponse.data.admin_username
+            this.loginForm.password = initResponse.data.admin_password
+            
+            // 5秒后隐藏提示信息
+            setTimeout(() => {
+              this.showInitMessage = false
+            }, 5000)
+          }
+        } else {
+          // 数据库已初始化
+          this.showInitMessage = false
+        }
+      } catch (error) {
+        console.error('数据库初始化检查失败:', error)
+        this.initMessage = '数据库初始化检查失败，请手动刷新页面重试'
+        this.initMessageType = 'error'
+        
+        // 10秒后隐藏错误信息
+        setTimeout(() => {
+          this.showInitMessage = false
+        }, 10000)
+      }
+    },
+
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -185,6 +247,16 @@ $light_gray:#eee;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
+
+  .init-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 600px;
+    z-index: 9999;
+  }
 
   .login-form {
     position: relative;

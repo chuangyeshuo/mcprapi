@@ -25,6 +25,11 @@ type Config struct {
 
 // NewMySQL 创建MySQL连接
 func NewMySQL(config Config) (*gorm.DB, error) {
+	// 首先尝试创建数据库（如果不存在）
+	if err := createDatabaseIfNotExists(config); err != nil {
+		return nil, fmt.Errorf("创建数据库失败: %v", err)
+	}
+
 	// 构建DSN
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=%s&parseTime=True&loc=Local",
 		config.Username,
@@ -61,6 +66,41 @@ func NewMySQL(config Config) (*gorm.DB, error) {
 	sqlDB.SetConnMaxLifetime(time.Hour) // 连接最大生命周期
 
 	return db, nil
+}
+
+// createDatabaseIfNotExists 创建数据库（如果不存在）
+func createDatabaseIfNotExists(config Config) error {
+	// 构建不包含数据库名的DSN，用于连接MySQL服务器
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/?charset=%s&parseTime=True&loc=Local",
+		config.Username,
+		config.Password,
+		config.Host,
+		config.Port,
+		config.Charset,
+	)
+
+	// 连接MySQL服务器
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	if err != nil {
+		return fmt.Errorf("连接MySQL服务器失败: %v", err)
+	}
+
+	// 获取底层SQL连接
+	sqlDB, err := db.DB()
+	if err != nil {
+		return fmt.Errorf("获取SQL连接失败: %v", err)
+	}
+	defer sqlDB.Close()
+
+	// 创建数据库（如果不存在）
+	createSQL := fmt.Sprintf("CREATE DATABASE IF NOT EXISTS `%s` CHARACTER SET %s COLLATE %s_unicode_ci",
+		config.Database, config.Charset, config.Charset)
+
+	if err := db.Exec(createSQL).Error; err != nil {
+		return fmt.Errorf("创建数据库失败: %v", err)
+	}
+
+	return nil
 }
 
 // AutoMigrate 自动迁移表结构
@@ -201,6 +241,20 @@ func InitData(db *gorm.DB) error {
 			Status:      1,
 		}
 		if err := tx.Create(api).Error; err != nil {
+			return err
+		}
+
+		// 创建默认Casbin策略
+		// 为admin用户添加全部权限
+		adminPolicy := map[string]interface{}{
+			"ptype": "p",
+			"v0":    "admin",
+			"v1":    "/api/v1/*",
+			"v2":    "*",
+			"v3":    "*",
+			"v4":    "allow",
+		}
+		if err := tx.Table("casbin_rule").Create(adminPolicy).Error; err != nil {
 			return err
 		}
 
