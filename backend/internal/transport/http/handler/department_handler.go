@@ -47,6 +47,19 @@ func (h *DepartmentHandler) Register(router *gin.RouterGroup) {
 }
 
 // Create 创建部门
+// @Summary 创建部门
+// @Description 创建新的部门
+// @Tags 部门管理
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param department body service.CreateDepartmentRequest true "部门信息"
+// @Success 200 {object} dto.Response{data=entity.Department} "创建成功"
+// @Failure 400 {object} dto.Response "请求参数错误"
+// @Failure 401 {object} dto.Response "未认证"
+// @Failure 403 {object} dto.Response "无权限"
+// @Failure 500 {object} dto.Response "服务器错误"
+// @Router /department [post]
 func (h *DepartmentHandler) Create(c *gin.Context) {
 	// 获取当前用户
 	userID := middleware.GetCurrentUser(c)
@@ -314,6 +327,19 @@ func (h *DepartmentHandler) Get(c *gin.Context) {
 }
 
 // List 获取部门列表
+// @Summary 获取部门列表
+// @Description 分页获取部门列表，支持搜索
+// @Tags 部门管理
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param page query int false "页码" default(1)
+// @Param limit query int false "每页数量" default(10)
+// @Param query query string false "搜索关键词"
+// @Success 200 {object} dto.Response{data=object{items=[]entity.Department,total=int64}} "获取成功"
+// @Failure 401 {object} dto.Response "未认证"
+// @Failure 500 {object} dto.Response "服务器错误"
+// @Router /department/list [get]
 func (h *DepartmentHandler) List(c *gin.Context) {
 	// 获取当前用户
 	userID := middleware.GetCurrentUser(c)

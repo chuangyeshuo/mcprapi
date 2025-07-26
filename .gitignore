@@ -10,6 +10,7 @@
 
 # 依赖目录
 backend/vendor/
+backend/bin/
 frontend/node_modules/
 
 # 日志文件

@@ -1,0 +1,768 @@
+basePath: /api/v1
+definitions:
+  dto.Response:
+    properties:
+      code:
+        description: 响应码
+        type: integer
+      data:
+        description: 响应数据
+      message:
+        description: 响应消息
+        type: string
+    type: object
+  entity.API:
+    properties:
+      business_id:
+        description: 所属业务线ID
+        type: integer
+      category_id:
+        description: 分类ID
+        type: integer
+      created_at:
+        type: string
+      description:
+        description: 描述
+        type: string
+      id:
+        type: integer
+      method:
+        description: 'HTTP方法: GET, POST, PUT, DELETE'
+        type: string
+      name:
+        type: string
+      path:
+        description: API路径
+        type: string
+      status:
+        description: '1: 启用, 0: 禁用'
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  entity.Business:
+    properties:
+      code:
+        type: string
+      created_at:
+        type: string
+      dept_id:
+        description: 所属部门ID
+        type: integer
+      description:
+        description: 描述
+        type: string
+      email:
+        description: 联系邮箱
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      owner:
+        description: 负责人
+        type: string
+      status:
+        description: '1: 启用, 0: 禁用'
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  entity.Department:
+    properties:
+      code:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      level:
+        description: 层级，1表示集团，2表示部门，3表示子部门
+        type: integer
+      name:
+        type: string
+      parent_id:
+        description: 父部门ID，0表示顶级部门
+        type: integer
+      sort:
+        description: 排序
+        type: integer
+      status:
+        description: '1: 启用, 0: 禁用'
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  entity.Role:
+    properties:
+      code:
+        type: string
+      created_at:
+        type: string
+      dept_id:
+        description: 所属部门ID
+        type: integer
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      status:
+        description: '1: 启用, 0: 禁用'
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  entity.User:
+    properties:
+      avatar:
+        description: 头像URL
+        type: string
+      created_at:
+        type: string
+      dept_id:
+        type: integer
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      status:
+        description: '1: 启用, 0: 禁用'
+        type: integer
+      token_version:
+        description: Token版本号，用于安全控制
+        type: integer
+      updated_at:
+        type: string
+      username:
+        type: string
+    type: object
+  service.BusinessAPIStatsItem:
+    properties:
+      name:
+        type: string
+      value:
+        type: integer
+    type: object
+  service.CreateBusinessRequest:
+    properties:
+      code:
+        type: string
+      dept_id:
+        type: integer
+      description:
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+      owner:
+        type: string
+    required:
+    - code
+    - dept_id
+    - name
+    type: object
+  service.CreateDepartmentRequest:
+    properties:
+      code:
+        type: string
+      level:
+        enum:
+        - 1
+        - 2
+        - 3
+        type: integer
+      name:
+        type: string
+      parent_id:
+        type: integer
+      sort:
+        type: integer
+    required:
+    - code
+    - level
+    - name
+    type: object
+  service.CreateRoleRequest:
+    properties:
+      code:
+        type: string
+      dept_id:
+        type: integer
+      description:
+        type: string
+      name:
+        type: string
+    required:
+    - code
+    - dept_id
+    - name
+    type: object
+  service.DashboardStats:
+    properties:
+      api_count:
+        type: integer
+      business_count:
+        type: integer
+      department_count:
+        type: integer
+      user_count:
+        type: integer
+    type: object
+  service.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  service.LoginResponse:
+    properties:
+      expires_at:
+        type: integer
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/entity.User'
+    type: object
+host: localhost:8081
+info:
+  contact:
+    email: support@mcprapi.com
+    name: MCP RAPI Support
+  description: API Permission Management System with Multi-tenant Authorization. This
+    system provides comprehensive API access control, user management, role-based
+    permissions, and department-level authorization.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  title: MCP RAPI - API Permission Management System
+  version: "1.0"
+paths:
+  /api/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 根据ID获取API的详细信息
+      parameters:
+      - description: API ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/entity.API'
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/dto.Response'
+        "404":
+          description: API不存在
+          schema:
+            $ref: '#/definitions/dto.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取API详情
+      tags:
+      - API管理
+  /api/list:
+    get:
+      consumes:
+      - application/json
+      description: 分页获取API列表，支持按业务线、分类、关键词筛选
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: 每页数量
+        in: query
+        name: limit
+        type: integer
+      - description: 搜索关键词
+        in: query
+        name: query
+        type: string
+      - description: 业务线ID
+        in: query
+        name: business_id
+        type: integer
+      - description: API分类
+        in: query
+        name: category
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "401":
+          description: 未认证
+          schema:
+            $ref: '#/definitions/dto.Response'
+        "500":
+          description: 内部错误
+          schema:
+            $ref: '#/definitions/dto.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取API列表
+      tags:
+      - API管理
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: 用户通过用户名和密码登录系统
+      parameters:
+      - description: 登录请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/service.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 登录成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/service.LoginResponse'
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/dto.Response'
+        "401":
+          description: 认证失败
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: 用户登录
+      tags:
+      - 认证
+  /auth/logout:
+    post:
+      consumes:
+      - application/json
+      description: 用户登出系统
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 登出成功
+          schema:
+            $ref: '#/definitions/dto.Response'
+        "500":
+          description: 内部错误
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: 用户登出
+      tags:
+      - 认证
+  /business:
+    post:
+      consumes:
+      - application/json
+      description: 创建新的业务线
+      parameters:
+      - description: 业务线信息
+        in: body
+        name: business
+        required: true
+        schema:
+          $ref: '#/definitions/service.CreateBusinessRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 创建成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/entity.Business'
+              type: object
+        "400":
+          description: 请求参数错误
+          schema:
+            $ref: '#/definitions/dto.Response'
+        "401":
+          description: 未认证
+          schema:
+            $ref: '#/definitions/dto.Response'
+        "403":
+          description: 无权限
+          schema:
+            $ref: '#/definitions/dto.Response'
+        "500":
+          description: 服务器错误
+          schema:
+            $ref: '#/definitions/dto.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 创建业务线
+      tags:
+      - 业务线管理
+  /business/list:
+    get:
+      consumes:
+      - application/json
+      description: 分页获取业务线列表，支持搜索和部门过滤
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: 每页数量
+        in: query
+        name: limit
+        type: integer
+      - description: 搜索关键词
+        in: query
+        name: query
+        type: string
+      - description: 部门ID
+        in: query
+        name: dept_id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  properties:
+                    items:
+                      items:
+                        $ref: '#/definitions/entity.Business'
+                      type: array
+                    total:
+                      format: int64
+                      type: integer
+                  type: object
+              type: object
+        "401":
+          description: 未认证
+          schema:
+            $ref: '#/definitions/dto.Response'
+        "403":
+          description: 无权限
+          schema:
+            $ref: '#/definitions/dto.Response'
+        "500":
+          description: 服务器错误
+          schema:
+            $ref: '#/definitions/dto.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取业务线列表
+      tags:
+      - 业务线管理
+  /dashboard/business-api-stats:
+    get:
+      consumes:
+      - application/json
+      description: 获取业务线API统计数据，管理员可查看所有业务线，普通用户只能查看自己部门的业务线
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/service.BusinessAPIStatsItem'
+                  type: array
+              type: object
+        "401":
+          description: 未认证
+          schema:
+            $ref: '#/definitions/dto.Response'
+        "403":
+          description: 无权限
+          schema:
+            $ref: '#/definitions/dto.Response'
+        "500":
+          description: 服务器错误
+          schema:
+            $ref: '#/definitions/dto.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取业务线API统计
+      tags:
+      - 仪表盘
+  /dashboard/stats:
+    get:
+      consumes:
+      - application/json
+      description: 获取系统整体统计数据，包括用户、部门、角色、API等数量
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/service.DashboardStats'
+              type: object
+        "500":
+          description: 服务器错误
+          schema:
+            $ref: '#/definitions/dto.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取仪表盘统计数据
+      tags:
+      - 仪表盘
+  /department:
+    post:
+      consumes:
+      - application/json
+      description: 创建新的部门
+      parameters:
+      - description: 部门信息
+        in: body
+        name: department
+        required: true
+        schema:
+          $ref: '#/definitions/service.CreateDepartmentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 创建成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/entity.Department'
+              type: object
+        "400":
+          description: 请求参数错误
+          schema:
+            $ref: '#/definitions/dto.Response'
+        "401":
+          description: 未认证
+          schema:
+            $ref: '#/definitions/dto.Response'
+        "403":
+          description: 无权限
+          schema:
+            $ref: '#/definitions/dto.Response'
+        "500":
+          description: 服务器错误
+          schema:
+            $ref: '#/definitions/dto.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 创建部门
+      tags:
+      - 部门管理
+  /department/list:
+    get:
+      consumes:
+      - application/json
+      description: 分页获取部门列表，支持搜索
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: 每页数量
+        in: query
+        name: limit
+        type: integer
+      - description: 搜索关键词
+        in: query
+        name: query
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  properties:
+                    items:
+                      items:
+                        $ref: '#/definitions/entity.Department'
+                      type: array
+                    total:
+                      format: int64
+                      type: integer
+                  type: object
+              type: object
+        "401":
+          description: 未认证
+          schema:
+            $ref: '#/definitions/dto.Response'
+        "500":
+          description: 服务器错误
+          schema:
+            $ref: '#/definitions/dto.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取部门列表
+      tags:
+      - 部门管理
+  /role:
+    post:
+      consumes:
+      - application/json
+      description: 创建新的角色
+      parameters:
+      - description: 创建角色请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/service.CreateRoleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 创建成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/entity.Role'
+              type: object
+        "400":
+          description: 参数错误或业务错误
+          schema:
+            $ref: '#/definitions/dto.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 创建角色
+      tags:
+      - 角色管理
+  /role/list:
+    get:
+      consumes:
+      - application/json
+      description: 分页获取角色列表，支持按部门、关键词筛选
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: 每页数量
+        in: query
+        name: limit
+        type: integer
+      - description: 搜索关键词
+        in: query
+        name: query
+        type: string
+      - description: 部门ID
+        in: query
+        name: dept_id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "500":
+          description: 内部错误
+          schema:
+            $ref: '#/definitions/dto.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取角色列表
+      tags:
+      - 角色管理
+  /user/info:
+    get:
+      consumes:
+      - application/json
+      description: 获取当前登录用户的详细信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "401":
+          description: 未认证
+          schema:
+            $ref: '#/definitions/dto.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取当前用户信息
+      tags:
+      - 用户
+securityDefinitions:
+  ApiKeyAuth:
+    description: 'JWT token, format: Bearer {token}'
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

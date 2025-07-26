@@ -1,3 +1,17 @@
+// MCP RAPI - API Permission Management System
+// @title MCP RAPI - API Permission Management System
+// @version 1.0
+// @description API Permission Management System with Multi-tenant Authorization. This system provides comprehensive API access control, user management, role-based permissions, and department-level authorization.
+// @contact.name MCP RAPI Support
+// @contact.email support@mcprapi.com
+// @license.name MIT
+// @license.url https://opensource.org/licenses/MIT
+// @host localhost:8081
+// @BasePath /api/v1
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
+// @description JWT token, format: Bearer {token}
 package main
 
 import (
@@ -13,7 +27,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	swaggerFiles "github.com/swaggo/files"
 
+	_ "mcprapi/backend/docs" // 导入Swagger文档
 	"mcprapi/backend/internal/infrastructure/container"
 	"mcprapi/backend/internal/transport/http/handler"
 	"mcprapi/backend/internal/transport/middleware"
@@ -63,6 +80,9 @@ func main() {
 
 	// 注册中间件
 	r.Use(middleware.CORS())
+
+	// Swagger文档路由
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// 注册路由
 	// 公共API

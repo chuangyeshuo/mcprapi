@@ -201,6 +201,17 @@ func (h *APIHandler) Delete(c *gin.Context) {
 }
 
 // Get 获取API
+// @Summary 获取API详情
+// @Description 根据ID获取API的详细信息
+// @Tags API管理
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param id path int true "API ID"
+// @Success 200 {object} dto.Response{data=entity.API} "获取成功"
+// @Failure 400 {object} dto.Response "参数错误"
+// @Failure 404 {object} dto.Response "API不存在"
+// @Router /api/{id} [get]
 func (h *APIHandler) Get(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -228,6 +239,21 @@ func (h *APIHandler) Get(c *gin.Context) {
 }
 
 // List 获取API列表
+// @Summary 获取API列表
+// @Description 分页获取API列表，支持按业务线、分类、关键词筛选
+// @Tags API管理
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param page query int false "页码" default(1)
+// @Param limit query int false "每页数量" default(10)
+// @Param query query string false "搜索关键词"
+// @Param business_id query int false "业务线ID"
+// @Param category query string false "API分类"
+// @Success 200 {object} dto.Response{data=map[string]interface{}} "获取成功"
+// @Failure 401 {object} dto.Response "未认证"
+// @Failure 500 {object} dto.Response "内部错误"
+// @Router /api/list [get]
 func (h *APIHandler) List(c *gin.Context) {
 	// 获取当前用户ID
 	userID := middleware.GetCurrentUser(c)

@@ -46,6 +46,19 @@ func (h *BusinessHandler) Register(router *gin.RouterGroup) {
 }
 
 // Create 创建业务线
+// @Summary 创建业务线
+// @Description 创建新的业务线
+// @Tags 业务线管理
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param business body service.CreateBusinessRequest true "业务线信息"
+// @Success 200 {object} dto.Response{data=entity.Business} "创建成功"
+// @Failure 400 {object} dto.Response "请求参数错误"
+// @Failure 401 {object} dto.Response "未认证"
+// @Failure 403 {object} dto.Response "无权限"
+// @Failure 500 {object} dto.Response "服务器错误"
+// @Router /business [post]
 func (h *BusinessHandler) Create(c *gin.Context) {
 	// 获取当前用户
 	userID := middleware.GetCurrentUser(c)
@@ -333,6 +346,21 @@ func (h *BusinessHandler) Get(c *gin.Context) {
 }
 
 // List 获取业务线列表
+// @Summary 获取业务线列表
+// @Description 分页获取业务线列表，支持搜索和部门过滤
+// @Tags 业务线管理
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param page query int false "页码" default(1)
+// @Param limit query int false "每页数量" default(10)
+// @Param query query string false "搜索关键词"
+// @Param dept_id query int false "部门ID"
+// @Success 200 {object} dto.Response{data=object{items=[]entity.Business,total=int64}} "获取成功"
+// @Failure 401 {object} dto.Response "未认证"
+// @Failure 403 {object} dto.Response "无权限"
+// @Failure 500 {object} dto.Response "服务器错误"
+// @Router /business/list [get]
 func (h *BusinessHandler) List(c *gin.Context) {
 	// 获取当前用户
 	userID := middleware.GetCurrentUser(c)

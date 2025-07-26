@@ -26,6 +26,16 @@ func NewUserHandler(userService *service.UserService, authService *service.AuthS
 }
 
 // Login 用户登录
+// @Summary 用户登录
+// @Description 用户通过用户名和密码登录系统
+// @Tags 认证
+// @Accept json
+// @Produce json
+// @Param request body service.LoginRequest true "登录请求"
+// @Success 200 {object} dto.Response{data=service.LoginResponse} "登录成功"
+// @Failure 400 {object} dto.Response "参数错误"
+// @Failure 401 {object} dto.Response "认证失败"
+// @Router /auth/login [post]
 func (h *UserHandler) Login(c *gin.Context) {
 	var req service.LoginRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -53,6 +63,14 @@ func (h *UserHandler) Login(c *gin.Context) {
 }
 
 // Logout 用户登出
+// @Summary 用户登出
+// @Description 用户登出系统
+// @Tags 认证
+// @Accept json
+// @Produce json
+// @Success 200 {object} dto.Response "登出成功"
+// @Failure 500 {object} dto.Response "内部错误"
+// @Router /auth/logout [post]
 func (h *UserHandler) Logout(c *gin.Context) {
 	resp, err := h.authService.Logout()
 	if err != nil {
@@ -108,6 +126,15 @@ func (h *UserHandler) CheckQRCode(c *gin.Context) {
 }
 
 // GetInfo 获取当前用户信息
+// @Summary 获取当前用户信息
+// @Description 获取当前登录用户的详细信息
+// @Tags 用户
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Success 200 {object} dto.Response{data=map[string]interface{}} "获取成功"
+// @Failure 401 {object} dto.Response "未认证"
+// @Router /user/info [get]
 func (h *UserHandler) GetInfo(c *gin.Context) {
 	// 从JWT中间件获取当前用户ID
 	userID := middleware.GetCurrentUser(c)

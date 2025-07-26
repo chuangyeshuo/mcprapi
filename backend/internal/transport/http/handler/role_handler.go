@@ -53,6 +53,16 @@ func (h *RoleHandler) Register(router *gin.RouterGroup) {
 }
 
 // Create 创建角色
+// @Summary 创建角色
+// @Description 创建新的角色
+// @Tags 角色管理
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param request body service.CreateRoleRequest true "创建角色请求"
+// @Success 200 {object} dto.Response{data=entity.Role} "创建成功"
+// @Failure 400 {object} dto.Response "参数错误或业务错误"
+// @Router /role [post]
 func (h *RoleHandler) Create(c *gin.Context) {
 	var req service.CreateRoleRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -173,6 +183,19 @@ func (h *RoleHandler) Get(c *gin.Context) {
 }
 
 // List 获取角色列表
+// @Summary 获取角色列表
+// @Description 分页获取角色列表，支持按部门、关键词筛选
+// @Tags 角色管理
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param page query int false "页码" default(1)
+// @Param limit query int false "每页数量" default(10)
+// @Param query query string false "搜索关键词"
+// @Param dept_id query int false "部门ID"
+// @Success 200 {object} dto.Response{data=map[string]interface{}} "获取成功"
+// @Failure 500 {object} dto.Response "内部错误"
+// @Router /role/list [get]
 func (h *RoleHandler) List(c *gin.Context) {
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))

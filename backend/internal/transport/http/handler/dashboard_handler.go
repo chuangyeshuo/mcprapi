@@ -37,6 +37,15 @@ func (h *DashboardHandler) RegisterRoutes(r *gin.RouterGroup) {
 }
 
 // GetDashboardStats 获取仪表盘统计数据
+// @Summary 获取仪表盘统计数据
+// @Description 获取系统整体统计数据，包括用户、部门、角色、API等数量
+// @Tags 仪表盘
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Success 200 {object} dto.Response{data=service.DashboardStats} "获取成功"
+// @Failure 500 {object} dto.Response "服务器错误"
+// @Router /dashboard/stats [get]
 func (h *DashboardHandler) GetDashboardStats(c *gin.Context) {
 	stats, err := h.dashboardService.GetDashboardStats()
 	if err != nil {
@@ -73,6 +82,17 @@ func (h *DashboardHandler) GetAPICategories(c *gin.Context) {
 }
 
 // GetBusinessAPIStats 获取业务线API统计
+// @Summary 获取业务线API统计
+// @Description 获取业务线API统计数据，管理员可查看所有业务线，普通用户只能查看自己部门的业务线
+// @Tags 仪表盘
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Success 200 {object} dto.Response{data=[]service.BusinessAPIStatsItem} "获取成功"
+// @Failure 401 {object} dto.Response "未认证"
+// @Failure 403 {object} dto.Response "无权限"
+// @Failure 500 {object} dto.Response "服务器错误"
+// @Router /dashboard/business-api-stats [get]
 func (h *DashboardHandler) GetBusinessAPIStats(c *gin.Context) {
 	// 获取当前用户
 	userID := middleware.GetCurrentUser(c)
