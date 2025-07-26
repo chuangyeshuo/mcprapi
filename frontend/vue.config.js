@@ -7,7 +7,7 @@ module.exports = defineConfig({
     port: 8082,
     proxy: {
       '/api': {
-        target: 'http://localhost:8081',
+        target: 'http://backend-dev:8080', // 本地 http://localhost:8080 Docker环境请改为 http://backend-dev:8080
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/api'
