@@ -1,6 +1,6 @@
 module mcprapi/backend
 
-go 1.20
+go 1.23
 
 require (
 	github.com/casbin/casbin/v2 v2.77.2

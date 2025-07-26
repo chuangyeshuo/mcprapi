@@ -59,7 +59,21 @@ clean:
 
 # ==================== 数据库初始化命令 ====================
 
-# 初始化开发环境数据库
+# 检查并初始化开发环境数据库（智能检查）
+.PHONY: init-db-smart
+init-db-smart:
+	@echo "正在检查开发环境数据库状态..."
+	@if docker exec mcprapi-mysql-dev mysql -u mcprapi -pdevpassword api_auth_dev -e "SELECT COUNT(*) FROM users WHERE username='admin';" 2>/dev/null | grep -q "1"; then \
+		echo "✅ 数据库已经初始化，跳过初始化步骤"; \
+	else \
+		echo "🔄 数据库未初始化，开始执行初始化..."; \
+		cd $(BACKEND_DIR) && go run scripts/init_admin.go -config configs/dev.yaml; \
+		echo "✅ 数据库初始化完成！"; \
+		echo "管理员账号: admin / 123456"; \
+		echo "普通用户账号: member / 123456"; \
+	fi
+
+# 初始化开发环境数据库（强制重新初始化）
 .PHONY: init-db
 init-db:
 	@echo "正在初始化开发环境数据库..."
@@ -88,9 +102,22 @@ install: install-backend install-frontend
 
 # 开发环境快速启动
 .PHONY: dev-setup
-dev-setup: install init-db
+dev-setup: install
 	@echo "开发环境设置完成！"
 	@echo "现在可以运行 'make run-backend' 和 'make run-frontend' 启动服务"
+
+# Docker开发环境完整启动（包含数据库初始化）
+.PHONY: docker-dev-full
+docker-dev-full: docker-dev-up
+	@echo "等待数据库服务启动..."
+	@sleep 10
+	@$(MAKE) init-db-smart
+	@echo "🎉 Docker开发环境启动完成！"
+	@echo "后端服务: http://localhost:8081"
+	@echo "前端服务: http://localhost:8082"
+	@echo "API文档: http://localhost:8081/swagger/index.html"
+	@echo "数据库管理: http://localhost:8083"
+	@echo "Redis管理: http://localhost:8084"
 
 # ==================== Docker 生产环境命令 ====================
 

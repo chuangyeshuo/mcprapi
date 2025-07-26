@@ -128,7 +128,7 @@ services:
     container_name: mcprapi-adminer
     restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "8083:8080"
     networks:
       - mcprapi-dev-network
     depends_on:
@@ -142,7 +142,7 @@ services:
     environment:
       - REDIS_HOSTS=local:redis-dev:6379:0:${REDIS_PASSWORD:-devpassword}
     ports:
-      - "8081:8081"
+      - "8084:8081"
     networks:
       - mcprapi-dev-network
     depends_on:

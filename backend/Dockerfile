@@ -45,8 +45,8 @@ ENV GO111MODULE=on \
     GOPROXY=https://goproxy.cn,direct \
     GOSUMDB=sum.golang.google.cn
 
-# 安装air用于热重载
-RUN go install github.com/cosmtrek/air@latest
+# 安装air用于热重载（使用兼容版本）
+RUN go install github.com/cosmtrek/air@v1.49.0
 
 COPY go.mod go.sum ./
 

@@ -44,7 +44,7 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 8082
 
 CMD ["npm", "run", "serve"]
 
