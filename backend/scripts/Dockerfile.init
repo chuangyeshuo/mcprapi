@@ -2,7 +2,7 @@
 FROM golang:1.23-alpine AS init-builder
 
 # 安装必要的工具
-RUN apk add --no-cache git ca-certificates tzdata mysql-client
+RUN apk add --no-cache git ca-certificates tzdata mysql-client wget
 
 # 设置工作目录
 WORKDIR /app
@@ -15,13 +15,13 @@ ENV GO111MODULE=on \
     GOPROXY=https://goproxy.cn,direct
 
 # 复制go.mod和go.sum文件
-COPY ../go.mod ../go.sum ./
+COPY go.mod go.sum ./
 
 # 下载依赖
 RUN go mod download && go mod verify
 
 # 复制源代码
-COPY .. .
+COPY . .
 
 # 编译初始化程序
 RUN go build -ldflags="-w -s" -o init_admin ./scripts/init_admin.go
@@ -30,7 +30,7 @@ RUN go build -ldflags="-w -s" -o init_admin ./scripts/init_admin.go
 FROM alpine:3.18
 
 # 安装必要的包
-RUN apk --no-cache add ca-certificates tzdata mysql-client
+RUN apk --no-cache add ca-certificates tzdata mysql-client wget
 
 # 设置时区
 ENV TZ=Asia/Shanghai
@@ -43,7 +43,7 @@ COPY --from=init-builder /app/init_admin /app/
 COPY --from=init-builder /app/configs /app/configs/
 
 # 复制初始化脚本
-COPY init_db.sh /app/
+COPY scripts/init_db.sh /app/
 
 # 设置执行权限
 RUN chmod +x /app/init_db.sh
