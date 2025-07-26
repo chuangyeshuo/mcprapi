@@ -260,12 +260,27 @@ Interactive API documentation is available once the system is running:
 
 ### 📚 Additional Resources
 
+- [📚 **文档总览**](DOCS_OVERVIEW.md) - **完整文档导航和学习路径**
 - [🚀 Quick Start Guide](QUICK_START.md) - **Start here for fastest setup!**
+- [📋 Complete Deployment Guide](DEPLOYMENT_GUIDE.md) - **Comprehensive deployment instructions**
 - [🏗️ System Architecture](API多租户授权管理系统架构文档.md)
 - [🗃️ Database Setup Guide](DATABASE_INIT.md)
 - [🐳 Docker Deployment Guide](DOCKER_DEPLOYMENT.md)
 - [🏢 Department Management](新增部门流程文档.md)
 - [🤖 MCP Integration Guide](mcp-example/FASTMCP_HTTP_CONFIG.md)
+
+### 🔧 Deployment Options
+
+| 部署方式 | 适用场景 | 难度 | 推荐指数 |
+|---------|---------|------|---------|
+| [🐳 Docker Compose](DEPLOYMENT_GUIDE.md#-docker-compose-一键部署推荐) | 生产环境、团队协作 | ⭐ | ⭐⭐⭐⭐⭐ |
+| [💻 手动部署](DEPLOYMENT_GUIDE.md#-手动部署) | 学习研究、深度定制 | ⭐⭐⭐⭐ | ⭐⭐⭐ |
+| [☁️ 云原生部署](DEPLOYMENT_GUIDE.md#-监控与日志) | 大规模生产环境 | ⭐⭐⭐ | ⭐⭐⭐⭐ |
+
+**🎯 选择建议：**
+- **新手用户**: 推荐使用 [Docker Compose 一键部署](DEPLOYMENT_GUIDE.md#-docker-compose-一键部署推荐)
+- **开发者**: 推荐查看 [完整部署指南](DEPLOYMENT_GUIDE.md) 了解所有选项
+- **运维团队**: 推荐阅读 [性能优化](DEPLOYMENT_GUIDE.md#-性能优化) 和 [安全配置](DEPLOYMENT_GUIDE.md#-安全配置) 章节
 
 ## 🌟 Key Capabilities
 

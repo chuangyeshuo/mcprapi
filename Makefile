@@ -206,6 +206,60 @@ docker-exec-mysql:
 docker-exec-redis:
 	docker exec -it mcprapi-redis redis-cli
 
+# ==================== 文档命令 ====================
+
+# 查看文档总览
+.PHONY: docs
+docs:
+	@echo "📚 MCP RAPI 项目文档总览"
+	@echo ""
+	@echo "🚀 快速开始:"
+	@echo "  - README.md           - 项目概览和快速开始"
+	@echo "  - QUICK_START.md      - 一键启动指南"
+	@echo "  - DOCS_OVERVIEW.md    - 完整文档导航"
+	@echo ""
+	@echo "🏗️ 部署文档:"
+	@echo "  - DEPLOYMENT_GUIDE.md - 完整部署指南"
+	@echo "  - DOCKER_DEPLOYMENT.md - Docker部署指南"
+	@echo ""
+	@echo "🏛️ 架构文档:"
+	@echo "  - API多租户授权管理系统架构文档.md - 系统架构"
+	@echo "  - DATABASE_INIT.md    - 数据库初始化"
+	@echo ""
+	@echo "🔧 功能文档:"
+	@echo "  - 新增部门流程文档.md - 部门管理流程"
+	@echo "  - mcp-example/        - MCP集成示例"
+	@echo ""
+	@echo "使用 'make docs-serve' 启动文档服务器"
+
+# 启动文档服务器（如果有的话）
+.PHONY: docs-serve
+docs-serve:
+	@if command -v mdbook >/dev/null 2>&1; then \
+		echo "启动 mdbook 文档服务器..."; \
+		mdbook serve; \
+	elif command -v docsify >/dev/null 2>&1; then \
+		echo "启动 docsify 文档服务器..."; \
+		docsify serve .; \
+	elif command -v python3 >/dev/null 2>&1; then \
+		echo "启动简单HTTP服务器查看文档..."; \
+		python3 -m http.server 3000; \
+	else \
+		echo "未找到文档服务器工具，请手动查看 Markdown 文件"; \
+	fi
+
+# 检查文档链接
+.PHONY: docs-check
+docs-check:
+	@echo "检查文档文件是否存在..."
+	@for doc in README.md QUICK_START.md DEPLOYMENT_GUIDE.md DOCS_OVERVIEW.md DOCKER_DEPLOYMENT.md DATABASE_INIT.md; do \
+		if [ -f "$$doc" ]; then \
+			echo "✅ $$doc"; \
+		else \
+			echo "❌ $$doc (缺失)"; \
+		fi; \
+	done
+
 # ==================== 环境配置命令 ====================
 
 # 创建环境变量文件
@@ -213,6 +267,11 @@ docker-exec-redis:
 env-setup:
 	cp .env.example .env
 	@echo "请编辑 .env 文件配置您的环境变量"
+
+# 检查项目状态
+.PHONY: status
+status:
+	@./scripts/check_project_status.sh
 
 # 检查环境
 .PHONY: env-check
@@ -280,7 +339,15 @@ help:
 	@echo "  make docker-exec-redis - 进入Redis容器"
 	@echo ""
 	@echo "环境配置:"
+	@echo "  make status            - 检查项目状态"
 	@echo "  make env-setup         - 创建环境变量文件"
 	@echo "  make env-check         - 检查环境依赖"
 	@echo "  make init              - 初始化项目"
+	@echo ""
+	@echo "文档命令:"
+	@echo "  make docs              - 查看文档总览"
+	@echo "  make docs-serve        - 启动文档服务器"
+	@echo "  make docs-check        - 检查文档文件"
+	@echo ""
+	@echo "其他:"
 	@echo "  make help              - 显示帮助信息"
