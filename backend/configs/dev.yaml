@@ -1,0 +1,32 @@
+# 开发环境配置
+server:
+  port: 8081
+  mode: debug
+
+mysql:
+  host: localhost
+  port: 3306
+  username: root
+  password: lidi10
+  database: api_auth_dev
+  charset: utf8mb4
+
+redis:
+  host: localhost
+  port: 6379
+  password: ""
+  db: 0
+
+jwt:
+  secret: "dev_jwt_secret_key_change_this_in_production"
+  expire: 86400  # 24小时
+
+casbin:
+  model: "configs/casbin_model.conf"
+  policy_type: "mysql"  # 使用MySQL存储策略
+
+log:
+  level: debug
+  file_path: "logs/api-auth.log"
+  file_mode: true
+  format_str: "[%time%] [%level%] %msg%"

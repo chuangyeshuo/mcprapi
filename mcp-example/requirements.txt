@@ -1,0 +1,9 @@
+# MCP服务依赖包
+fastmcp
+httpx
+asyncio-mqtt
+
+# 开发和测试依赖
+pytest
+pytest-asyncio
+pytest-cov

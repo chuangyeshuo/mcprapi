@@ -1,0 +1,68 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- 主品牌蓝色渐变 -->
+    <linearGradient id="brandBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563EB;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 科技蓝渐变 -->
+    <linearGradient id="techBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2563EB;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 浅蓝色渐变 -->
+    <linearGradient id="lightBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#60A5FA;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3B82F6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- GitHub风格的猫头主体 -->
+   <g transform="translate(100, 85)">
+     <!-- 猫头部 -->
+     <ellipse cx="0" cy="0" rx="32" ry="28" fill="url(#brandBlue)" stroke="#1E40AF" stroke-width="2"/>
+     
+     <!-- 猫耳朵 -->
+     <ellipse cx="-18" cy="-22" rx="8" ry="12" fill="url(#brandBlue)" transform="rotate(-25 -18 -22)"/>
+     <ellipse cx="18" cy="-22" rx="8" ry="12" fill="url(#brandBlue)" transform="rotate(25 18 -22)"/>
+     <ellipse cx="-18" cy="-22" rx="4" ry="6" fill="#ffffff" transform="rotate(-25 -18 -22)"/>
+     <ellipse cx="18" cy="-22" rx="4" ry="6" fill="#ffffff" transform="rotate(25 18 -22)"/>
+     
+     <!-- 猫眼睛 -->
+     <ellipse cx="-10" cy="-8" rx="6" ry="8" fill="#ffffff"/>
+     <ellipse cx="10" cy="-8" rx="6" ry="8" fill="#ffffff"/>
+     <circle cx="-10" cy="-6" r="4" fill="url(#techBlue)"/>
+     <circle cx="10" cy="-6" r="4" fill="url(#techBlue)"/>
+     <circle cx="-9" cy="-7" r="2" fill="#ffffff"/>
+     <circle cx="11" cy="-7" r="2" fill="#ffffff"/>
+     
+     <!-- 猫鼻子和嘴巴 -->
+     <ellipse cx="0" cy="2" rx="2" ry="1.5" fill="#1E40AF"/>
+     <path d="M 0,4 Q -4,8 -8,6 Q -4,10 0,8 Q 4,10 8,6 Q 4,8 0,4" fill="#1E40AF"/>
+     
+     <!-- 猫胡须 - 左侧3根 -->
+     <line x1="-25" y1="-6" x2="-35" y2="-8" stroke="#1E40AF" stroke-width="2" stroke-linecap="round"/>
+     <line x1="-25" y1="-2" x2="-35" y2="-2" stroke="#1E40AF" stroke-width="2" stroke-linecap="round"/>
+     <line x1="-25" y1="2" x2="-35" y2="4" stroke="#1E40AF" stroke-width="2" stroke-linecap="round"/>
+     
+     <!-- 猫胡须 - 右侧3根 -->
+     <line x1="25" y1="-6" x2="35" y2="-8" stroke="#1E40AF" stroke-width="2" stroke-linecap="round"/>
+     <line x1="25" y1="-2" x2="35" y2="-2" stroke="#1E40AF" stroke-width="2" stroke-linecap="round"/>
+     <line x1="25" y1="2" x2="35" y2="4" stroke="#1E40AF" stroke-width="2" stroke-linecap="round"/>
+     
+     <!-- 状态指示器 -->
+     <circle cx="0" cy="-20" r="2.5" fill="#10B981">
+       <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite"/>
+     </circle>
+   </g>
+  
+  <!-- 品牌标识 -->
+  <text x="100" y="155" text-anchor="middle" 
+        font-family="system-ui, -apple-system, sans-serif" 
+        font-size="20" font-weight="600" 
+        fill="#1E40AF">
+    MCP RAPI
+  </text>
+</svg>

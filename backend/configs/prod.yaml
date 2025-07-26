@@ -1,0 +1,35 @@
+# 生产环境配置
+server:
+  port: 8081
+  mode: debug
+  # release
+
+mysql:
+  host: localhost  # 本地数据库，Docker环境请改为 mysql
+  port: 3306
+  username: root
+  password: lidi10  # 从环境变量获取
+  database: api_auth_prod
+  charset: utf8mb4
+
+redis:
+  host: localhost  # 本地Redis，Docker环境请改为 redis
+  port: 6379
+  password: ""  # 从环境变量获取
+  db: 1
+
+jwt:
+  secret: prod_jwt_secret_key_change_this_in_production  # 从环境变量获取
+  expire: 86400  # 24小时
+
+casbin:
+  model: "configs/casbin_model.conf"
+  policy: "mysql"  # 使用MySQL存储策略
+
+log:
+  level: info
+  filename: "logs/api-auth.log"
+  max_size: 100  # MB
+  max_backups: 10
+  max_age: 30    # 天
+  compress: true

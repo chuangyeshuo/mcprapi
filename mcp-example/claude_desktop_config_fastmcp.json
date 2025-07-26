@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fastmcp-streamable-http": {
+      "type": "streamableHttp",
+      "url": "http://localhost:8000/mcp/",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo3LCJ1c2VybmFtZSI6ImxpZGkxMCIsImRlcHRfaWQiOjIsImV4cCI6MTc1MzU4NzkxMSwiaWF0IjoxNzUzNTAxNTExLCJpc3MiOiJhcGktYXV0aC1zeXN0ZW0ifQ.nfOCdyaHR2A1xA-7hjfFb3SkltQi4I6bJ7sHcBU8f_A"
+      }
+    }
+  }
+}
