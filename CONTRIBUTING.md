@@ -35,11 +35,11 @@ Thank you for your interest in contributing to **MCP RAPI**! We welcome contribu
 ### 1. 🍴 Fork the Repository
 ```bash
 # Fork the repo on GitHub, then clone your fork
-git clone https://github.com/YOUR_USERNAME/mcp-rapi.git
+git clone https://github.com/chuangyeshuo/mcprapi.git
 cd mcp-rapi
 
 # Add the original repo as upstream
-git remote add upstream https://github.com/original-owner/mcp-rapi.git
+git remote add upstream https://github.com/chuangyeshuo/mcprapi.git
 ```
 
 ### 2. 🌿 Create a Branch
@@ -357,7 +357,7 @@ Every contribution, no matter how small, makes MCP RAPI better for everyone. We 
 ---
 
 **Questions?** Feel free to reach out:
-- 💬 [GitHub Discussions](https://github.com/yourusername/mcp-rapi/discussions)
+- 💬 [GitHub Discussions](https://github.com/chuangyeshuo/mcprapi/discussions)
 - 📧 Email: contributors@mcp-rapi.com
 - 📱 Discord: [Join our Discord](https://discord.gg/mcp-rapi)
 

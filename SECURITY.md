@@ -102,7 +102,7 @@ Security updates will be:
 
 For any security-related questions or concerns:
 - Email: security@mcprapi.dev
-- Security Advisory: [GitHub Security Advisories](https://github.com/your-org/mcp-rapi/security/advisories)
+- Security Advisory: [GitHub Security Advisories](https://github.com/chuangyeshuo/mcprapi/security/advisories)
 
 ---
 

@@ -344,7 +344,7 @@ Have a great idea? We'd love to hear it! Please include:
 
 ## 🌟 Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/mcp-rapi&type=Date)](https://star-history.com/#yourusername/mcp-rapi&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=chuangyeshuo/mcprapi&type=Date)](https://star-history.com/#chuangyeshuo/mcprapi&Date)
 
 ## 🚀 Roadmap
 
@@ -371,8 +371,8 @@ Special thanks to these amazing projects that make MCP RAPI possible:
 
 ## 💬 Community & Support
 
-- **💬 Discussions**: [GitHub Discussions](https://github.com/yourusername/mcp-rapi/discussions)
-- **🐛 Issues**: [GitHub Issues](https://github.com/yourusername/mcp-rapi/issues)
+- **💬 Discussions**: [GitHub Discussions](https://github.com/chuangyeshuo/mcprapi/discussions)
+- **🐛 Issues**: [GitHub Issues](https://github.com/chuangyeshuo/mcprapi/issues)
 - **📧 Email**: support@mcp-rapi.com
 - **📱 Discord**: [Join our Discord](https://discord.gg/mcp-rapi)
 
@@ -382,7 +382,7 @@ Special thanks to these amazing projects that make MCP RAPI possible:
 
 **Made with ❤️ by the MCP RAPI Community**
 
-[⭐ Star us on GitHub](https://github.com/yourusername/mcp-rapi) • [🐛 Report Bug](https://github.com/yourusername/mcp-rapi/issues) • [💡 Request Feature](https://github.com/yourusername/mcp-rapi/issues) • [💬 Join Discussion](https://github.com/yourusername/mcp-rapi/discussions)
+[⭐ Star us on GitHub](https://github.com/chuangyeshuo/mcprapi) • [🐛 Report Bug](https://github.com/chuangyeshuo/mcprapi/issues) • [💡 Request Feature](https://github.com/chuangyeshuo/mcprapi/issues) • [💬 Join Discussion](https://github.com/chuangyeshuo/mcprapi/discussions)
 
 **🚀 Ready to revolutionize your API permission management? Get started now!**
 
