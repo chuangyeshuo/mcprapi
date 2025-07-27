@@ -359,6 +359,6 @@ Every contribution, no matter how small, makes MCP RAPI better for everyone. We 
 **Questions?** Feel free to reach out:
 - 💬 [GitHub Discussions](https://github.com/chuangyeshuo/mcprapi/discussions)
 - 📧 Email: contributors@mcp-rapi.com
-- 📱 Discord: [Join our Discord](https://discord.gg/mcp-rapi)
+- 📱 Discord: [Join our Discord](https://discord.gg/DmyRA3Nj)
 
 **Happy Contributing! 🚀**

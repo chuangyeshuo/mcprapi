@@ -374,7 +374,7 @@ Special thanks to these amazing projects that make MCP RAPI possible:
 - **💬 Discussions**: [GitHub Discussions](https://github.com/chuangyeshuo/mcprapi/discussions)
 - **🐛 Issues**: [GitHub Issues](https://github.com/chuangyeshuo/mcprapi/issues)
 - **📧 Email**: support@mcp-rapi.com
-- **📱 Discord**: [Join our Discord](https://discord.gg/mcp-rapi)
+- **📱 Discord**: [Join our Discord](https://discord.gg/DmyRA3Nj)
 
 ---
 

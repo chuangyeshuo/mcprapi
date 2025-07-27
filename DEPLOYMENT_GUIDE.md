@@ -1074,7 +1074,7 @@ func (h *HealthHandler) Check(c *gin.Context) {
 **联系方式：**
 - 📧 Email: support@mcprapi.com
 - 💬 GitHub Issues: [提交问题](https://github.com/chuangyeshuo/mcprapi/issues)
-- 📱 Discord: [加入讨论](https://discord.gg/mcprapi)
+- 📱 Discord: [加入讨论](https://discord.gg/DmyRA3Nj)
 
 ---
 
