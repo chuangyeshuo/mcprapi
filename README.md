@@ -114,7 +114,14 @@
 ├── 🎨 assets/                  # Project Assets
 │   └── logo.svg               # Project Logo
 ├── 📚 docs/                    # Documentation
-└── 🔧 mcp-example/             # MCP Integration Examples
+├── 🚀 deploy/                  # Deployment & Container Management
+│   ├── 🐳 docker-compose.ghcr.yml # GHCR Docker Compose
+│   ├── 🔧 build-and-push.sh   # Build & Push Images Script
+│   ├── 🚀 deploy-ghcr.sh      # GHCR Deployment Script
+│   ├── ⚙️  .env.production      # Production Environment Config
+│   ├── 📖 README.md           # Deployment Guide
+│   └── 📚 GITHUB_CONTAINER_REGISTRY_GUIDE.md # GHCR Guide
+├── 🔧 mcp-example/             # MCP Integration Examples
     ├── fastmcp_http_server.py # FastMCP HTTP Server
     ├── requirements.txt       # Python Dependencies
     └── start_fastmcp_http_server.sh # Startup Script
@@ -157,6 +164,29 @@ Password: admin
 > ⚠️ **Security Note**: Please change the default password immediately after first login!
 
 ### 🏭 Production Deployment
+
+#### 🐳 GitHub Container Registry (推荐)
+
+使用预构建的Docker镜像快速部署：
+
+```bash
+# 1. 进入部署目录
+cd deploy
+
+# 2. 配置环境变量
+cp .env.production .env
+# 编辑 .env 文件，设置必要的环境变量
+
+# 3. 使用GHCR镜像启动服务
+docker-compose -f docker-compose.ghcr.yml up -d
+
+# 4. 检查服务状态
+docker-compose -f docker-compose.ghcr.yml ps
+```
+
+**📚 详细指南**: 查看 [`deploy/README.md`](deploy/README.md) 获取完整的部署说明
+
+#### 🏗️ 本地构建部署
 
 ```bash
 # 1. Configure environment variables
@@ -271,16 +301,22 @@ Interactive API documentation is available once the system is running:
 
 ### 🔧 Deployment Options
 
-| 部署方式 | 适用场景 | 难度 | 推荐指数 |
-|---------|---------|------|---------|
-| [🐳 Docker Compose](DEPLOYMENT_GUIDE.md#-docker-compose-一键部署推荐) | 生产环境、团队协作 | ⭐ | ⭐⭐⭐⭐⭐ |
-| [💻 手动部署](DEPLOYMENT_GUIDE.md#-手动部署) | 学习研究、深度定制 | ⭐⭐⭐⭐ | ⭐⭐⭐ |
-| [☁️ 云原生部署](DEPLOYMENT_GUIDE.md#-监控与日志) | 大规模生产环境 | ⭐⭐⭐ | ⭐⭐⭐⭐ |
+| 部署方式 | 适用场景 | 难度 | 推荐指数 | 文档链接 |
+|---------|---------|------|---------|----------|
+| [🐳 GitHub Container Registry](deploy/README.md) | 生产环境、快速部署 | ⭐ | ⭐⭐⭐⭐⭐ | [部署指南](DEPLOY_QUICK_START.md) |
+| [🐳 Docker Compose](DEPLOYMENT_GUIDE.md#-docker-compose-一键部署推荐) | 生产环境、团队协作 | ⭐⭐ | ⭐⭐⭐⭐ | [完整指南](DEPLOYMENT_GUIDE.md) |
+| [💻 手动部署](DEPLOYMENT_GUIDE.md#-手动部署) | 学习研究、深度定制 | ⭐⭐⭐⭐ | ⭐⭐⭐ | [手动部署](DEPLOYMENT_GUIDE.md) |
+| [☁️ 云原生部署](DEPLOYMENT_GUIDE.md#-监控与日志) | 大规模生产环境 | ⭐⭐⭐ | ⭐⭐⭐⭐ | [云原生指南](DEPLOYMENT_GUIDE.md) |
 
 **🎯 选择建议：**
-- **新手用户**: 推荐使用 [Docker Compose 一键部署](DEPLOYMENT_GUIDE.md#-docker-compose-一键部署推荐)
-- **开发者**: 推荐查看 [完整部署指南](DEPLOYMENT_GUIDE.md) 了解所有选项
+- **新手用户**: 推荐使用 [GitHub Container Registry 部署](DEPLOY_QUICK_START.md) - 最快最简单
+- **开发者**: 推荐查看 [完整部署指南](DEPLOYMENT_GUIDE.md) 了解所有选项  
 - **运维团队**: 推荐阅读 [性能优化](DEPLOYMENT_GUIDE.md#-性能优化) 和 [安全配置](DEPLOYMENT_GUIDE.md#-安全配置) 章节
+
+**📋 相关工具：**
+- [🔑 GitHub Token 权限检查](deploy/check-token-permissions.sh) - 验证部署权限
+- [📊 构建状态查看](deploy/BUILD_STATUS.md) - 查看最新构建信息
+- [🛠️ 故障排除指南](deploy/GITHUB_PACKAGES_TROUBLESHOOTING.md) - 解决常见问题
 
 ## 🌟 Key Capabilities
 
@@ -371,7 +407,7 @@ Special thanks to these amazing projects that make MCP RAPI possible:
 
 ## 💬 Community & Support
 
-- **💬 Discussions**: [GitHub Discussions](https://github.com/chuangyeshuo/mcprapi/discussions)
+- **💬 Discussions**: [GitHub Issues](https://github.com/chuangyeshuo/mcprapi/issues)
 - **🐛 Issues**: [GitHub Issues](https://github.com/chuangyeshuo/mcprapi/issues)
 - **📧 Email**: support@mcp-rapi.com
 - **📱 Discord**: [Join our Discord](https://discord.gg/DmyRA3Nj)
@@ -382,7 +418,7 @@ Special thanks to these amazing projects that make MCP RAPI possible:
 
 **Made with ❤️ by the MCP RAPI Community**
 
-[⭐ Star us on GitHub](https://github.com/chuangyeshuo/mcprapi) • [🐛 Report Bug](https://github.com/chuangyeshuo/mcprapi/issues) • [💡 Request Feature](https://github.com/chuangyeshuo/mcprapi/issues) • [💬 Join Discussion](https://github.com/chuangyeshuo/mcprapi/discussions)
+[⭐ Star us on GitHub](https://github.com/chuangyeshuo/mcprapi) • [🐛 Report Bug](https://github.com/chuangyeshuo/mcprapi/issues) • [💡 Request Feature](https://github.com/chuangyeshuo/mcprapi/issues) • [💬 Join Discussion](https://github.com/chuangyeshuo/mcprapi/issues)
 
 **🚀 Ready to revolutionize your API permission management? Get started now!**
 

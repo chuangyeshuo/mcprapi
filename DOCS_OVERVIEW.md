@@ -10,6 +10,7 @@
 |------|------|----------|----------|
 | [📖 README.md](README.md) | 项目介绍和基础信息 | 所有用户 | 5分钟 |
 | [⚡ QUICK_START.md](QUICK_START.md) | 快速启动指南 | 新手用户 | 10分钟 |
+| [🚀 DEPLOY_QUICK_START.md](DEPLOY_QUICK_START.md) | **部署快速入门** | 新手用户 | 15分钟 |
 | [📋 DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) | **完整部署指南** | 开发者、运维 | 30分钟 |
 
 ### 🏗️ 系统架构
@@ -18,14 +19,18 @@
 |------|------|----------|----------|
 | [🏗️ API多租户授权管理系统架构文档.md](API多租户授权管理系统架构文档.md) | 系统整体架构设计 | 架构师、开发者 | ⭐⭐⭐⭐⭐ |
 | [🗃️ DATABASE_INIT.md](DATABASE_INIT.md) | 数据库初始化指南 | 数据库管理员 | ⭐⭐⭐⭐ |
-| [🗃️ DATABASE_INIT_GUIDE.md](DATABASE_INIT_GUIDE.md) | 数据库详细配置 | 数据库管理员 | ⭐⭐⭐⭐⭐ |
 
 ### 🐳 部署运维
 
 | 文档 | 描述 | 适用人群 | 复杂度 |
 |------|------|----------|---------|
+| [🚀 DEPLOY_QUICK_START.md](DEPLOY_QUICK_START.md) | **部署快速入门** | 新手用户 | ⭐⭐ |
 | [🐳 DOCKER_DEPLOYMENT.md](DOCKER_DEPLOYMENT.md) | Docker专项部署 | DevOps工程师 | ⭐⭐⭐ |
 | [📋 DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) | **完整部署指南** | 所有技术人员 | ⭐⭐⭐⭐⭐ |
+| [📁 deploy/README.md](deploy/README.md) | 部署目录说明 | 运维工程师 | ⭐⭐ |
+| [🔑 deploy/check-token-permissions.sh](deploy/check-token-permissions.sh) | GitHub Token权限检查 | 开发者、运维 | ⭐ |
+| [📊 deploy/BUILD_STATUS.md](deploy/BUILD_STATUS.md) | 构建状态记录 | 开发者、运维 | ⭐ |
+| [🛠️ deploy/GITHUB_PACKAGES_TROUBLESHOOTING.md](deploy/GITHUB_PACKAGES_TROUBLESHOOTING.md) | 包发布故障排除 | 开发者、运维 | ⭐⭐ |
 
 ### 🔧 功能模块
 
@@ -78,16 +83,22 @@
 ### 🔧 运维工程师路径
 
 1. **部署阶段**
+   - [🚀 DEPLOY_QUICK_START.md](DEPLOY_QUICK_START.md) - **快速入门**
    - [📋 DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) - **核心文档**
    - [🐳 DOCKER_DEPLOYMENT.md](DOCKER_DEPLOYMENT.md) - Docker专项
    - [🗃️ DATABASE_INIT.md](DATABASE_INIT.md) - 数据库配置
 
-2. **优化阶段**
+2. **工具使用**
+   - [🔑 deploy/check-token-permissions.sh](deploy/check-token-permissions.sh) - 权限检查
+   - [📊 deploy/BUILD_STATUS.md](deploy/BUILD_STATUS.md) - 构建状态
+   - [🛠️ deploy/GITHUB_PACKAGES_TROUBLESHOOTING.md](deploy/GITHUB_PACKAGES_TROUBLESHOOTING.md) - 故障排除
+
+3. **优化阶段**
    - [📋 性能优化章节](DEPLOYMENT_GUIDE.md#-性能优化) - 系统调优
    - [🔒 安全配置章节](DEPLOYMENT_GUIDE.md#-安全配置) - 安全加固
    - [📈 监控日志章节](DEPLOYMENT_GUIDE.md#-监控与日志) - 运维监控
 
-3. **维护阶段**
+4. **维护阶段**
    - [🛠️ 故障排除章节](DEPLOYMENT_GUIDE.md#️-故障排除) - 问题诊断
    - [🔒 SECURITY.md](SECURITY.md) - 安全响应
 
@@ -105,8 +116,9 @@
 
 1. **第一步**: [📖 README.md](README.md) - 5分钟了解项目
 2. **第二步**: [⚡ QUICK_START.md](QUICK_START.md) - 10分钟快速体验
-3. **第三步**: [📋 DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) - 30分钟掌握部署
-4. **进阶**: 根据需要选择其他专项文档
+3. **第三步**: [🚀 DEPLOY_QUICK_START.md](DEPLOY_QUICK_START.md) - 15分钟学会部署
+4. **第四步**: [📋 DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) - 30分钟掌握完整部署
+5. **进阶**: 根据需要选择其他专项文档
 
 ---
 
@@ -154,7 +166,7 @@
 1. **发现问题**: 在使用过程中发现文档问题
 2. **提交Issue**: 在 [GitHub Issues](https://github.com/chuangyeshuo/mcprapi/issues) 中报告
 3. **提交PR**: 直接修改文档并提交Pull Request
-4. **参与讨论**: 在 [GitHub Discussions](https://github.com/chuangyeshuo/mcprapi/discussions) 中讨论
+4. **参与讨论**: 在 [GitHub Issues](https://github.com/chuangyeshuo/mcprapi/issues) 中讨论
 
 ### 📋 文档规范
 
@@ -176,7 +188,7 @@
 
 1. **📖 查看相关文档**: 先查看是否有相关文档解答
 2. **🔍 搜索已知问题**: 在 Issues 中搜索类似问题
-3. **💬 提问讨论**: 在 Discussions 中提出问题
+3. **💬 提问讨论**: 在 Issues 中提出问题
 4. **🐛 报告问题**: 如果是文档错误，请提交 Issue
 5. **📧 联系我们**: support@mcprapi.com
 
@@ -197,7 +209,7 @@
 **🤝 参与贡献：**
 - [🤝 贡献指南](CONTRIBUTING.md)
 - [🐛 报告问题](https://github.com/chuangyeshuo/mcprapi/issues)
-- [💬 参与讨论](https://github.com/chuangyeshuo/mcprapi/discussions)
+- [💬 参与讨论](https://github.com/chuangyeshuo/mcprapi/issues)
 
 ---
 
@@ -205,6 +217,6 @@
 
 **📚 文档即代码，让每个人都能轻松上手 MCP RAPI！**
 
-[⭐ Star 项目](https://github.com/chuangyeshuo/mcprapi) • [📖 改进文档](https://github.com/chuangyeshuo/mcprapi/issues) • [💬 加入讨论](https://github.com/chuangyeshuo/mcprapi/discussions)
+[⭐ Star 项目](https://github.com/chuangyeshuo/mcprapi) • [📖 改进文档](https://github.com/chuangyeshuo/mcprapi/issues) • [💬 加入讨论](https://github.com/chuangyeshuo/mcprapi/issues)
 
 </div>

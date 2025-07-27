@@ -340,7 +340,7 @@ Any other context or screenshots
 
 ### 🗣️ Communication Channels
 - **GitHub Issues** - Bug reports and feature requests
-- **GitHub Discussions** - General questions and ideas
+- **GitHub Issues** - General questions and ideas
 - **Discord** - Real-time chat and support
 - **Email** - Private matters
 
@@ -357,7 +357,7 @@ Every contribution, no matter how small, makes MCP RAPI better for everyone. We 
 ---
 
 **Questions?** Feel free to reach out:
-- 💬 [GitHub Discussions](https://github.com/chuangyeshuo/mcprapi/discussions)
+- 💬 [GitHub Issues](https://github.com/chuangyeshuo/mcprapi/issues)
 - 📧 Email: contributors@mcp-rapi.com
 - 📱 Discord: [Join our Discord](https://discord.gg/DmyRA3Nj)
 
