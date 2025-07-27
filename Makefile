@@ -310,7 +310,7 @@ help:
 	@echo "  make clean             - 清理构建产物"
 	@echo ""
 	@echo "数据库初始化:"
-	@echo "  make init-db           - 初始化开发环境数据库 (admin/123456)"
+	@echo "  make init-db           - 初始化开发环境数据库 (admin/admin)"
 	@echo "  make init-db-prod      - 初始化生产环境数据库"
 	@echo "  make install-backend   - 安装后端依赖"
 	@echo "  make install           - 安装所有依赖"

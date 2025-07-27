@@ -22,8 +22,8 @@ docker-compose -f docker-compose.dev.yml up -d
 # 3. 查看启动状态
 docker-compose -f docker-compose.dev.yml ps
 
-# 4. 查看初始化日志（可选）
-docker-compose -f docker-compose.dev.yml logs db-init-dev
+# 4. 查看服务日志（可选）
+docker-compose -f docker-compose.dev.yml logs
 ```
 
 **✨ 自动化特性：**
@@ -56,8 +56,8 @@ docker-compose up -d
 # 4. 查看启动状态
 docker-compose ps
 
-# 5. 查看初始化日志（可选）
-docker-compose logs db-init
+# 5. 查看服务日志（可选）
+docker-compose logs
 ```
 
 **🔒 生产环境特性：**
